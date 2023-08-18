@@ -1,11 +1,14 @@
 import streamlit as st
 
 
-st.set_page_config(
-     page_title="Streamlit App",
-     layout="wide" # layout="centered"
-)
+# Initialize connection.
+conn = st.experimental_connection('mysql', type='sql')
 
-st.header ("부지런한 거위팀")
-st.subheader("부지런한 거위팀의 첫번째 스트림릿 앱입니다.")
-st.write("111111")
+# Perform query.
+df = conn.query("SELECT `매매대금_평균` FROM estate_data WHERE 시군구='충청북도 충주시 호암동-221' AND 단지명='호암리버빌(1단지)';", ttl=600)
+
+
+# Print results.
+for row in df.itertuples():
+    st.write(row)
+
